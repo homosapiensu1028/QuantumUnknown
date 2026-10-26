@@ -1,0 +1,57 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+version = mod_version
+group = mod_group_id
+base { archivesName = mod_id }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.neoforged.net/releases' }
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+}
+
+neoForge {
+    version = neo_version
+    mods {
+        quantumcore {
+            sourceSet sourceSets.main
+        }
+    }
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+    }
+}
+
+dependencies {
+    compileOnly 'org.spongepowered:mixin:0.8.7'
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${jei_version}"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-AoutRefMapFile=' + file("$buildDir/generated/quantumcore.refmap.json").absolutePath]
+}
+
+sourceSets.main.resources.srcDir(layout.buildDirectory.file('generated/quantumcore.refmap.json').map { it.asFile.parentFile })
+tasks.named('processResources') {
+    dependsOn tasks.named('compileJava')
+}
+
+jar {
+    manifest.attributes(['MixinConfigs': 'quantumcore.mixins.json'])
+}

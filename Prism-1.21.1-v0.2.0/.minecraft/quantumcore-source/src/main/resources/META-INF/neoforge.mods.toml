@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="quantumcore"
+version="0.2.0"
+displayName="Quantum Unknown"
+authors="Quantum Unknown contributors"
+description='''
+An observation-driven Minecraft experience with deterministic recipe output randomization,
+unknown item/block presentation, progression gates, and JEI restrictions.
+'''
+
+[[mixins]]
+config="quantumcore.mixins.json"
+
+[[dependencies.quantumcore]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.262,)"
+side="BOTH"
+
+[[dependencies.quantumcore]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+side="BOTH"
+
+[[dependencies.quantumcore]]
+modId="jei"
+type="optional"
+versionRange="[19.21.0,)"
+side="CLIENT"

@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.quantumunknown.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "quantumcore.refmap.json",
+  "mixins": [
+    "CraftingMenuMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "RecipeBookComponentMixin"
+  ]
+}
